@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Programming_Concepts", "Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncDelegateDemo", "AsyncDelegateDemo\AsyncDelegateDemo.csproj", "{B15C098D-05A5-4006-9546-5C59A5998944}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Networking", "Networking\Networking.csproj", "{DD627379-9B02-4374-A36E-0A99AE11DA1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B15C098D-05A5-4006-9546-5C59A5998944}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B15C098D-05A5-4006-9546-5C59A5998944}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B15C098D-05A5-4006-9546-5C59A5998944}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD627379-9B02-4374-A36E-0A99AE11DA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD627379-9B02-4374-A36E-0A99AE11DA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD627379-9B02-4374-A36E-0A99AE11DA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD627379-9B02-4374-A36E-0A99AE11DA1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
