@@ -72,8 +72,8 @@ namespace ClassicWindowsForms
 
             // this.Text = "This is a test!";
 
-            //var targetMethod = new Action(UpdateUI);
-            //this.Invoke(targetMethod);
+            var targetMethod = new Action(UpdateUI);
+            this.Invoke(targetMethod);
 
             using (var downloader = new System.Net.WebClient())
             {
