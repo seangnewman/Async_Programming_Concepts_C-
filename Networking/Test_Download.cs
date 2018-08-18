@@ -12,7 +12,36 @@ namespace Networking
         string url = "http://www.deelay.me/10000/http://www.delsink.com";
 
         [TestMethod]
-        public void Test_Download_DelsinkCOM()
+        public void Test_Download_delsinkidotcom_Synchronous()
+        {
+            var httpRequestInfo = HttpWebRequest.CreateHttp(url);
+            var httpResponseInfo = httpRequestInfo.GetResponse();
+
+            var responseStream = httpResponseInfo.GetResponseStream();  // downloading page content
+            using (var sr = new StreamReader(responseStream))
+            {
+                var webPage = sr.ReadToEnd();
+            }
+        }
+        
+        [TestMethod]
+        public async Task Test_Download_deslinkdotcom_AsyncAwait()
+        {
+            var httpRequestInfo = HttpWebRequest.CreateHttp(url);
+            var httpResponseInfo =  await httpRequestInfo.GetResponseAsync();
+
+            var responseStream = httpResponseInfo.GetResponseStream();  // downloading page content
+            using (var sr = new StreamReader(responseStream))
+            {
+                var webPage = sr.ReadToEnd();
+            }
+        }
+
+
+
+
+        [TestMethod]
+        public void Test_Download_deslinkdotcom_BeginEnd()
         {
             var httpRequestInfo = HttpWebRequest.CreateHttp(url);
             var callback = new AsyncCallback(HttpResponseAvailable);
@@ -40,15 +69,13 @@ namespace Networking
 
 
         [TestMethod]
-        public void Test_Download_DelsinkCOM_AsyncTask()
+        public void Test_Download_deslinkdotcom_AsyncTask()
         {
             var httpRequestInfo = HttpWebRequest.CreateHttp(url);
            
             Task<WebResponse> taskWebResponse = httpRequestInfo.GetResponseAsync();
             Task taskContinuation = taskWebResponse.ContinueWith(HttpResponseContinuation, TaskContinuationOptions.OnlyOnRanToCompletion);
-            //taskWebResponse.Wait();
-            //taskContinuation.Wait();
-
+          
             Task.WaitAll(taskWebResponse, taskContinuation);
         }
 

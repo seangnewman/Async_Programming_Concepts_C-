@@ -35,6 +35,31 @@ namespace Databases
         }
 
         [TestMethod]
+        public async Task Test_DB_AsyncAwait()
+        {
+            string connectionString;
+            connectionString = "Data Source=ALTAIR\\ALTAIR_2014;Initial Catalog=master;Integrated Security=True";
+
+            string sqlSelect = "SELECT @@VERSION";
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                await sqlConnection.OpenAsync();
+
+                using (var sqlCommand = new SqlCommand(sqlSelect, sqlConnection))
+                {
+                    using (var reader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            var data = reader[0].ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
         public void Test_DB_ASync()
         {
             string connectionString;
