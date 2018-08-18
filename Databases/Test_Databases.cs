@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Databases
 {
@@ -69,6 +71,42 @@ namespace Databases
             }
          }
 
+        [TestMethod]
+        public void Test_DB_ASyncTask()
+        {
+            ManualResetEvent mre = new ManualResetEvent(false);
+            string connectionString;
+            connectionString = "Data Source=ALTAIR\\ALTAIR_2014;Initial Catalog=master;Integrated Security=True";
+
+            string sqlSelect = "SELECT @@VERSION";
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                Task taskSqlConnection = sqlConnection.OpenAsync();
+
+                taskSqlConnection.ContinueWith((Task tx, object state) => {
+                    var sqlConn = state as SqlConnection;
+                    Assert.IsTrue(sqlConn.State == System.Data.ConnectionState.Open);
+                    var sqlCommand = new SqlCommand(sqlSelect, sqlConn);
+                    Task<SqlDataReader> taskDataReader = sqlCommand.ExecuteReaderAsync();
+                    Task taskProcessData = taskDataReader.ContinueWith((Task<SqlDataReader> txx) =>
+                    {
+                        using (var reader = txx.Result)
+                        {
+                            while (reader.Read())
+                            {
+                                var data = reader[0].ToString();
+                            }
+                        }
+                    }, TaskContinuationOptions.OnlyOnRanToCompletion);
+
+                }, sqlConnection, TaskContinuationOptions.OnlyOnRanToCompletion);
+                mre.WaitOne();
+            }
+            
+            
+        }
+       
 
     }
 }
